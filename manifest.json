@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "EdX Course Checker",
+    "version": "1.0",
+    "description": "A Chrome extension to track course sections on EdX.",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "tabs"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://*.edx.org/*"],
+        "js": ["content.js"],
+        "css": ["styles.css"]
+      }
+    ]
+  }
+  
