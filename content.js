@@ -7,12 +7,14 @@ const svgSelector = "ol#courseHome-outline > li > div > div:first-child > div > 
 // HTMLNode -> HTMLNode
 // inserty a html progress bar before a node
 function insertProgressBar(nextElement) {
-    let progress = document.createElement("progress"); // value + max
+    // let progress = document.createElement("progress"); // value + max
+    // progress.max = 100;
+    // progress.value = 0;
+    let progress = document.createElement("div")
     progress.id = "external-extension-progress-bar"
-    progress.max = 100;
-    progress.value = 0;
     progress.style.width = "100%"
     progress.style.height = "40px"
+    progress.dataset.value = 0
     nextElement.parentNode.insertBefore(progress, nextElement)
 }
 
@@ -20,7 +22,8 @@ function insertProgressBar(nextElement) {
 // HTMLNode Number Number -> HTMLNode
 function UpdateProgressBar(element, total, checked) {
     let percentage = checked / total * 100
-    element.value = percentage
+    element.dataset.value = percentage.toFixed(0)
+    document.documentElement.style.setProperty("--progress-width", percentage + "%")
 }
 
 
@@ -130,7 +133,13 @@ document.addEventListener('click', function (clickedElement) {
                     let liElement = targetSVG.closest("li")
                     let index = Array.from(liElement.parentNode.children).indexOf(liElement)
                     let svgIndex = indexArray.indexOf(index)
-                    indexArray.splice(svgIndex, 1);
+                    
+                    while (indexArray.indexOf(index) != -1) {
+                        indexArray.splice(svgIndex, 1);
+                        svgIndex = indexArray.indexOf(index)
+                    }
+                    
+
                     courses[courseID] = indexArray;
 
                     chrome.storage.sync.set({ coursesObj: courses }).then(() => {

@@ -1,0 +1,31 @@
+:root {
+    --progress-width: 0%
+}
+
+#external-extension-progress-bar {
+    width: 100%;
+    height: 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    border: 1px solid #EEE;
+    border-radius: 4px;
+    position: relative;
+}
+
+#external-extension-progress-bar::after {
+    content: attr(data-value) "%";
+    width: var(--progress-width);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: .375rem;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    color: white;
+    font-weight: bold;
+    background-color: #0d7d4d;
+    transition: 0.3s;
+
+}
